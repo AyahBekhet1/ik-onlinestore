@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import {  ShippingAddress } from "@/types";
 import OrderDetailsTable from "./order-details-table";
 import { auth } from "@/auth";
-import { getMyCart } from "@/lib/actions/cart.actions";
 
 export const metadata: Metadata = {
   title: "Order Details",

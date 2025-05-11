@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { deleteUser, getAllUsers } from "@/lib/actions/user.action"
 import { requireAdmin } from "@/lib/auth-guard"
-import { formateDateTime, formatId } from "@/lib/utils"
+import { formatId } from "@/lib/utils"
 import { Metadata } from "next"
 import Link from "next/link"
 

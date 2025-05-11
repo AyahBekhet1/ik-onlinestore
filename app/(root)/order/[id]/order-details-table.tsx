@@ -49,7 +49,13 @@ export default function OrderDetailsTable({
         onClick={() =>
           startTransition(async () => {
             const res = await updateOrderToPaidCOD(order.id);
-            !res.success ? toast.error(res.message) : toast(res.message);
+            if(!res.success ){
+
+              toast.error(res.message) 
+            }else{
+              toast(res.message);
+            }
+
           })
         }
       >
@@ -68,7 +74,12 @@ export default function OrderDetailsTable({
         onClick={() =>
           startTransition(async () => {
             const res = await deliverOrder(order.id);
-            !res.success ? toast.error(res.message) : toast(res.message);
+            if(!res.success ){
+
+              toast.error(res.message) 
+            }else{
+              toast(res.message);
+            }
           })
         }
       >

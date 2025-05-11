@@ -4,7 +4,6 @@ import  '@/assets/styles/globals.css'
 import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
 import { Toaster } from 'sonner';
 import SessionProviderWrapper from "@/components/SessionProviderWrapper";
-import Head from "next/head";
 import Script from "next/script";
 const inter = Inter({subsets:['latin']})
 
