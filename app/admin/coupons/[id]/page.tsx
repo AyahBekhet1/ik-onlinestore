@@ -30,7 +30,7 @@ export default async function AdminCouponUpdatePage(props:{
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       <h1 className="h2-bold">Update Coupon</h1>
-      <CouponForm type="Update" coupon={{...coupon,maxUses:coupon.maxUses??0}} couponId={coupon.id} />
+      <CouponForm type="Update" coupon={{...coupon,maxUses:coupon.maxUses??0 , discount:Number(coupon.discount)}} couponId={coupon.id} />
     </div>
   )
 }

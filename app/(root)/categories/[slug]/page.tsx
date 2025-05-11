@@ -6,14 +6,10 @@ import { getMyCart } from "@/lib/actions/cart.actions";
 import ProductCardCarousel from "@/components/productCardCarousel/product-card-carousel";
 import { convertToPlainObj } from "@/lib/utils";
 
-export default async function CategoryPage({
-  params,
-}: {
-  params: {
-    slug: string;
-  };
+export default async function CategoryPage(props: {
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params;
+  const { slug } = await props.params;
 
   const categories = await getAllCategory();
   if (!categories) notFound()
