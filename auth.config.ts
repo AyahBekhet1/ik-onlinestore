@@ -6,6 +6,8 @@ export const authConfig = {
   providers: [],
   callbacks: {
     authorized({ request, auth }: { request: NextRequest; auth: any }) {
+      const { pathname } = request.nextUrl;
+
       const protectedPaths = [
         /^\/profile/,
         /^\/user\/.*/,
@@ -13,29 +15,29 @@ export const authConfig = {
         /^\/admin/,
       ];
 
-      const { pathname } = request.nextUrl;
-
       const isProtected = protectedPaths.some((regex) => regex.test(pathname));
 
-      // If unauthenticated and path is protected, deny access
+      // Block unauthenticated access to protected routes
       if (!auth && isProtected) return false;
 
-      // Ensure sessionCartId exists, or set a new one
+      // Use cookie header string — compatible with Edge
       const cookieHeader = request.headers.get("cookie") || "";
-      const hasSessionCartId = cookieHeader.includes("sessionCartId=");
-      // If cookie exists, allow request
-      if (hasSessionCartId) return true;
+      const hasSessionCartId = /sessionCartId=/.test(cookieHeader);
 
-      // Generate UUID manually for Edge Runtime
+      if (hasSessionCartId) {
+        return true; // Let the request through
+      }
+
+      // Generate a random ID (UUID-like) manually
       const newSessionCartId = Array.from(crypto.getRandomValues(new Uint8Array(16)))
         .map((b) => b.toString(16).padStart(2, "0"))
         .join("");
 
-      // Create a response that sets the cookie
+      // Set cookie using header (not .cookies API — not allowed in Edge)
       const response = NextResponse.next();
-      response.headers.append(
+      response.headers.set(
         "Set-Cookie",
-        `sessionCartId=${newSessionCartId}; Path=/; Max-Age=${60 * 60 * 24 * 30}; HttpOnly`
+        `sessionCartId=${newSessionCartId}; Path=/; Max-Age=${60 * 60 * 24 * 30}; HttpOnly; Secure; SameSite=Lax`
       );
 
       return response;
