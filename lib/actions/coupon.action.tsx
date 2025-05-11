@@ -10,7 +10,6 @@ import { revalidatePath } from "next/cache";
 import { PAGE_SIZE } from "../constants";
 import { auth } from "@/auth";
 import { getMyCart } from "./cart.actions";
-import { getUserById } from "./user.action";
 
 export async function createCoupon(data:z.infer<typeof insertCouponSchema>) {
     try{

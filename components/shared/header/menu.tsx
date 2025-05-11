@@ -1,20 +1,18 @@
 import { Button } from "@/components/ui/button";
-import { AlignCenter, ShoppingCartIcon, UserIcon } from "lucide-react";
+import { AlignCenter, ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
+  
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import UserButton from "./user-button";
-import { auth } from "@/auth";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default async function Menu() {
-  const session = await auth();
 
   return (
     <nav>

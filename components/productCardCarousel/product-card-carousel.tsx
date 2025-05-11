@@ -1,9 +1,8 @@
 "use client";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {  useLayoutEffect, useRef, useState } from "react";
 
 import ProductCard from "../shared/product/productCard";
 
-import ReactLenis from "@studio-freight/react-lenis";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -25,7 +24,6 @@ export default function ProductCardCarousel({
 
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const [cardWidth, setWidth] = useState<number | null>(null);
   const [listWidth, setListWidth] = useState<number | null>(null);
   const [positions, setPositions] = useState<number[] | null>([]);
   const [rotations, setRotations] = useState<number[] | null>([]);
@@ -37,7 +35,7 @@ export default function ProductCardCarousel({
 useLayoutEffect(() => {
     if (cardRefs.current[0]) {
       const width = cardRefs.current[0].offsetWidth;
-      setWidth(width);
+      
       setListWidth((products.length-1)*width)
       setPositions(Array.from({ length: products.length }, (_, i) => i * (width +32)));
       setRotations(Array.from({ length: products.length }, () =>Math.floor(Math.random()*5 -2)));

@@ -87,4 +87,6 @@ const ProductCard =forwardRef<HTMLDivElement , CardProps>(({ product , cart , st
   );
 }
 )
+
+ProductCard.displayName = "ProductCard";
 export default ProductCard

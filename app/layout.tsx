@@ -5,13 +5,9 @@ import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
 import { Toaster } from 'sonner';
 import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 import Head from "next/head";
-import { Charmonman } from 'next/font/google';
-
+import Script from "next/script";
 const inter = Inter({subsets:['latin']})
-const charmonman = Charmonman({
-  subsets: ['latin'],
-  weight: ['400', '700'], // Both weights available
-});
+
 
 export const metadata: Metadata = {
   title: {
@@ -31,16 +27,14 @@ export default function RootLayout({
   return (
     <SessionProviderWrapper>
     <html lang="en" suppressContentEditableWarning>
-    <Head>
-        <script src="https://cdn.jsdelivr.net/npm/finisher-header/dist/finisher-header.min.js"></script>
-        
-      </Head>
+   
       <body
         className={`${inter.className} antialiased `}
       >
         {children}
         <Toaster   />
         
+        <Script src="https://cdn.jsdelivr.net/npm/finisher-header/dist/finisher-header.min.js" />
       </body>
     </html>
      </SessionProviderWrapper>

@@ -1,9 +1,7 @@
 import { getAllCategory } from "@/lib/actions/category.action";
 import CategoryClient from "./category-client";
-import { Category } from "@/types";
 import { notFound } from "next/navigation";
-import CategoryProducts from "@/components/categoryProducts/category-products";
-import { getAllProducts, getProductsByCategory } from "@/lib/actions/product.action";
+import {  getProductsByCategory } from "@/lib/actions/product.action";
 import { getMyCart } from "@/lib/actions/cart.actions";
 import ProductCardCarousel from "@/components/productCardCarousel/product-card-carousel";
 import { convertToPlainObj } from "@/lib/utils";
@@ -40,7 +38,7 @@ if (!category) notFound()
   <CategoryClient category={category}
   nextCategory={nextCategory}
   prevCategory={prevCategory} 
-  categoryProduct ={<CategoryProducts category={category} />}
+  
   categories={categories.data}
   productCrousel ={<ProductCardCarousel
         products={productsSpecificToCategory.map(convertToPlainObj)}

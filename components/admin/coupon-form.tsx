@@ -7,7 +7,7 @@ import { insertCouponSchema, updateCouponSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CouponDefaultValues, DISCOUNT_TYPE } from "@/lib/constants";
 import { Input } from "../ui/input";
-import { Select, SelectItem, SelectTrigger, SelectValue ,SelectContent} from "../ui/select";
+import { Select, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { format } from "date-fns"
 import { createCoupon, updateCoupon } from "@/lib/actions/coupon.action";
 import { toast } from "sonner";

@@ -1,5 +1,5 @@
 "use client";
-import { updateProfilePassswordSchema, updateProfileSchema } from "@/lib/validators";
+import { updateProfilePassswordSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
 import { useForm ,ControllerRenderProps } from "react-hook-form";
@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { updateProfile, updateProfilePassword } from "@/lib/actions/user.action";
+import { updateProfile } from "@/lib/actions/user.action";
 
 export default function ProfileForm() {
   const { data: session, update } = useSession();

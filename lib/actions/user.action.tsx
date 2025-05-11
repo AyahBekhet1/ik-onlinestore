@@ -1,6 +1,6 @@
 'use server'
 
-import { PaymentMethodSchema, shippingAddressSchema, signInFormSchema , signUpFormSchema, updateProfilePassswordSchema, updateProfileSchema, updateUserSchema} from "../validators"
+import { PaymentMethodSchema, shippingAddressSchema, signInFormSchema , signUpFormSchema, updateProfilePassswordSchema, updateUserSchema} from "../validators"
 import { auth, signIn , signOut } from "@/auth"
 import { isRedirectError } from "next/dist/client/components/redirect-error"
 import { hashSync } from "bcrypt-ts-edge"
@@ -34,20 +34,7 @@ export async function signInWithCredentials (prevState:unknown , formData:FormDa
     return {success:false , message:"Invalid email or password"}
 }
 
-export async function signInWithGoogle (prevState:unknown , formData:FormData){
-    try {
-     
 
-        await signIn('google')
-
-        return {success:true , message:"Signed in successfully"}
-    } catch (error) {
-        if(isRedirectError(error)){
-            throw error
-        }
-    }
-    return {success:false , message:"Invalid email or password"}
-}
 
 
 

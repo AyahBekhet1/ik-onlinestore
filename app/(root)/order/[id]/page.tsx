@@ -1,11 +1,10 @@
 import { Metadata } from "next";
-import { calculateTotalAfterCoupon, getOrderById } from "@/lib/actions/order.action";
+import {  getOrderById } from "@/lib/actions/order.action";
 import { notFound } from "next/navigation";
-import { Coupon, ShippingAddress } from "@/types";
+import {  ShippingAddress } from "@/types";
 import OrderDetailsTable from "./order-details-table";
 import { auth } from "@/auth";
 import { getMyCart } from "@/lib/actions/cart.actions";
-import { getCouponById } from "@/lib/actions/coupon.action";
 
 export const metadata: Metadata = {
   title: "Order Details",
@@ -19,7 +18,6 @@ export default async function OrderDetailsPage(props: {
 
   const order = await getOrderById(id);
   if (!order) notFound();
-   const cart = await getMyCart()
    
       
 

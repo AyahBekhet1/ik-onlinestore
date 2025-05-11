@@ -4,7 +4,7 @@ import ShopByCategory from "./shop-by-category";
 import LatestProductsCarousel from "./latest-products-carousel";
 import { getLatestProducts } from "@/lib/actions/product.action";
 import { getMyCart } from "@/lib/actions/cart.actions";
-import { Cart, CartItem } from "@/types";
+import { CartItem } from "@/types";
 import { convertToPlainObj } from "@/lib/utils";
 
 type CartPreview = {

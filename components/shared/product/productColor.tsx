@@ -1,7 +1,6 @@
 "use client";
 
 import { Product } from "@/types";
-import Link from "next/link";
 
 export default function ProductColor({ product ,chosenColor , setChosenColor }: { product: Product ; chosenColor:string ; setChosenColor:(color:string)=>void }) {
 

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -15,10 +15,16 @@ import { Order } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useTransition } from "react";
-import { updateOrderToPaidCOD , deliverOrder } from "@/lib/actions/order.action";
+import { updateOrderToPaidCOD, deliverOrder } from "@/lib/actions/order.action";
 import { toast } from "sonner";
 
-export default function OrderDetailsTable({ order , isAdmin }: { order: Order ; isAdmin:Boolean ; }) {
+export default function OrderDetailsTable({
+  order,
+  isAdmin,
+}: {
+  order: Order;
+  isAdmin: boolean;
+}) {
   const {
     shippingAddress,
     orderitems,
@@ -30,41 +36,46 @@ export default function OrderDetailsTable({ order , isAdmin }: { order: Order ; 
     paymentMethod,
     deliveredAt,
     paidAt,
-    totalPriceAfterDisc
   } = order;
 
   //button to mark order as paid
-  const MarkAsPaidButton =()=>{
-    const [isPending , startTransition] = useTransition()
+  const MarkAsPaidButton = () => {
+    const [isPending, startTransition] = useTransition();
 
     return (
-      <Button type="button"
-      disabled={isPending}
-      onClick={()=>startTransition(async()=>{
-        const res =  await updateOrderToPaidCOD(order.id)
-        !res.success? toast.error(res.message):toast(res.message)
-      })}
+      <Button
+        type='button'
+        disabled={isPending}
+        onClick={() =>
+          startTransition(async () => {
+            const res = await updateOrderToPaidCOD(order.id);
+            !res.success ? toast.error(res.message) : toast(res.message);
+          })
+        }
       >
-        {isPending?"Processing..." : 'Mark As Paid'}
+        {isPending ? "Processing..." : "Mark As Paid"}
       </Button>
-    )
-  }
+    );
+  };
 
-  const MarkAsDeliveredButton = ()=>{
-    const [isPending , startTransition] = useTransition()
+  const MarkAsDeliveredButton = () => {
+    const [isPending, startTransition] = useTransition();
 
     return (
-      <Button type="button"
-      disabled={isPending}
-      onClick={()=>startTransition(async()=>{
-        const res =  await deliverOrder(order.id)
-        !res.success? toast.error(res.message):toast(res.message)
-      })}
+      <Button
+        type='button'
+        disabled={isPending}
+        onClick={() =>
+          startTransition(async () => {
+            const res = await deliverOrder(order.id);
+            !res.success ? toast.error(res.message) : toast(res.message);
+          })
+        }
       >
-        {isPending?"Processing..." : 'Mark as Delivered'}
+        {isPending ? "Processing..." : "Mark as Delivered"}
       </Button>
-    )
-  }
+    );
+  };
   return (
     <>
       <h1 className='py-4 text-2xl'>Order {formatId(order.id)}</h1>
@@ -73,7 +84,7 @@ export default function OrderDetailsTable({ order , isAdmin }: { order: Order ; 
           <Card>
             <CardContent className='p-4 gap-4'>
               <h2 className='text-xl pb-4'>Payment Method</h2>
-              <p className="mb-2">{paymentMethod}</p>
+              <p className='mb-2'>{paymentMethod}</p>
               {isPaid ? (
                 <Badge variant='secondary'>
                   Paid at {formateDateTime(paidAt!).dateTime}
@@ -90,7 +101,7 @@ export default function OrderDetailsTable({ order , isAdmin }: { order: Order ; 
               <p>
                 {shippingAddress.streetAddress} , {shippingAddress.city}
               </p>
-              <p className="mb-2">
+              <p className='mb-2'>
                 {shippingAddress.postalCode} , {shippingAddress.country}
               </p>
               {isDelivered ? (
@@ -143,7 +154,7 @@ export default function OrderDetailsTable({ order , isAdmin }: { order: Order ; 
             </CardContent>
           </Card>
         </div>
-        <div className="py-2">
+        <div className='py-2'>
           <Card>
             <CardContent className='p-4 gap-4 space-y-4'>
               <div className='flex justify-between'>
@@ -158,23 +169,20 @@ export default function OrderDetailsTable({ order , isAdmin }: { order: Order ; 
                 <div>Total</div>
                 <div>{formateCurrency(totalPrice)}</div>
               </div>
-              {Number(order.totalPriceAfterDisc) !==0 &&
-                            <div className="flex justify-between">
-                            <div>Total After Discount</div>
-                            <div> {formateCurrency(Number(order.totalPriceAfterDisc))} </div>
-                        </div>
-}
-            {/* Cash on delivery */}
-            {
-              isAdmin && !isPaid && paymentMethod==='CashOnDelivery' && (
+              {Number(order.totalPriceAfterDisc) !== 0 && (
+                <div className='flex justify-between'>
+                  <div>Total After Discount</div>
+                  <div>
+                    {" "}
+                    {formateCurrency(Number(order.totalPriceAfterDisc))}{" "}
+                  </div>
+                </div>
+              )}
+              {/* Cash on delivery */}
+              {isAdmin && !isPaid && paymentMethod === "CashOnDelivery" && (
                 <MarkAsPaidButton />
-              )
-            }
-            {
-              isAdmin && isPaid && !isDelivered && (
-                <MarkAsDeliveredButton />
-              )
-            }  
+              )}
+              {isAdmin && isPaid && !isDelivered && (<MarkAsDeliveredButton />)}
             </CardContent>
           </Card>
         </div>

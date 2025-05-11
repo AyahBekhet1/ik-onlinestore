@@ -3,7 +3,6 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Category } from "@/types";

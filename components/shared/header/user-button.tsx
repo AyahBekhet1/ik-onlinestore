@@ -2,13 +2,7 @@ import Link from "next/link";
 import { auth } from "@/auth";
 import { signOutUser } from "@/lib/actions/user.action";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { ContactRound, ListOrdered, LogOut, ShoppingCartIcon, UserIcon } from "lucide-react";
 
 export default async function UserButton() {

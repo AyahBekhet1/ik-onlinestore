@@ -1,5 +1,4 @@
 "use client";
-import { Coupon } from "@/types";
 import { useForm, SubmitHandler, ControllerRenderProps } from "react-hook-form";
 import { z } from "zod";
 import { insertCouponApplySchema } from "@/lib/validators";
@@ -9,11 +8,9 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {  Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
-import { calculateTotalAfterCoupon } from "@/lib/actions/order.action";
-import { getMyCart } from "@/lib/actions/cart.actions";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { BadgePercent, IdCard } from "lucide-react";
+import { BadgePercent } from "lucide-react";
 
 
 export default  function CouponApplyForm() {
@@ -29,10 +26,8 @@ const [isPending, startTransition] = useTransition();
   const onSubmit: SubmitHandler<z.infer<typeof insertCouponApplySchema>> = async (
     values
   ) => {
-    const cart = await getMyCart()
 
       const res = await applyCoupon(values)
-      const total=   await calculateTotalAfterCoupon(Number(cart!.itemsPrice))
 
       if (!res.success) toast.error(res.message);
       else {
@@ -73,7 +68,7 @@ const [isPending, startTransition] = useTransition();
           <Button
             type='submit'
             size='lg'
-            disabled={form.formState.isSubmitting}
+            disabled={isPending}
             className='button col-span-2 w-full'
             
           >

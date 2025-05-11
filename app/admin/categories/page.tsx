@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { deleteCategory, getAllCategory } from "@/lib/actions/category.action";
-import { formateCurrency , formatId } from "@/lib/utils";
+import {  formatId } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Pagination from "@/components/shared/pagination";

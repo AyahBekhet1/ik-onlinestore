@@ -4,10 +4,8 @@ import AddToCart from "@/components/shared/product/addToCart";
 import ProductColor from "@/components/shared/product/productColor";
 import ProductImages from "@/components/shared/product/productImages";
 import ProductPrice from "@/components/shared/product/productPrice";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { convertToPlainObj } from "@/lib/utils";
-import { Cart, CartItem, Product } from "@/types";
+import {  CartItem, Product } from "@/types";
 import { useEffect, useState } from "react";
 
 type Props = {

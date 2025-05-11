@@ -1,4 +1,3 @@
-import ProductCard from "@/components/shared/product/productCard";
 import { getAllProducts } from "@/lib/actions/product.action";
 import { getMyCart } from "@/lib/actions/cart.actions";
 import { convertToPlainObj } from "@/lib/utils";

@@ -23,14 +23,13 @@ export default function CategoryClient({
   category,
   nextCategory,
   prevCategory,
-  categoryProduct,
+  
   productCrousel,
   categories,
 }: {
   category: Category;
   nextCategory: Category;
   prevCategory: Category;
-  categoryProduct: React.ReactNode;
   productCrousel: React.ReactNode;
   categories: Category[];
 }) {
@@ -43,7 +42,6 @@ export default function CategoryClient({
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [shouldUpdateProgress, setShouldUpdateProgress] = useState(true);
 
-  const lenisRef = useRef("");
   const router = useRouter()
   gsap.registerPlugin(ScrollTrigger);
 
@@ -75,7 +73,7 @@ export default function CategoryClient({
       ease: "power3.out",
     });
 
-    const navScrollTrigger = ScrollTrigger.create({
+     ScrollTrigger.create({
       trigger: document.body.querySelector(".category-page"),
       start: "top top",
       end: "bottom bottom",
@@ -88,7 +86,7 @@ export default function CategoryClient({
       },
     });
 
-    const footerScrollTrigger = ScrollTrigger.create({
+    ScrollTrigger.create({
       trigger: footerRef.current,
       start: "top top",
       end: `+=${window.innerHeight * 1}px`,

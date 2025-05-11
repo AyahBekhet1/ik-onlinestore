@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { signInDefaultvalues } from "@/lib/constants";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import { signInWithCredentials, signInWithGoogle } from "@/lib/actions/user.action";
+import { signInWithCredentials } from "@/lib/actions/user.action";
 import { useSearchParams } from "next/navigation";
 
 export default function CredentialSigninForm() {

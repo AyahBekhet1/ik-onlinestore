@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
@@ -217,7 +216,7 @@ export default function MainPage() {
       <p className='text-center text-sm md:text-base'>Your Next Favorite T-Shirt Is Probably Right Here.</p>
       <Button variant='default' className='text-white'>
         <Link href='/categories' className='text-white'>
-          Let's go Shopping
+          Let&apos;s go Shopping
         </Link>
       </Button>
     </div>
