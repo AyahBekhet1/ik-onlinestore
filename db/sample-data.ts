@@ -17,6 +17,36 @@ const sampleData = {
       role:"user"
     },
   ],
+  categories:[
+    {
+    name: 'Mens Shirts',
+    slug: 'mens-shirts',
+    description: 'Classic Polo style with modern comfort',
+    images: [
+      '/images/sample-products/p1-1.jpg',
+      '/images/sample-products/p1-2.jpg',
+    ],
+  },
+
+    {
+    name: "Mens Sweatshirts",
+    slug: 'mens-sweatshirts',
+    description: 'Classic Polo style with modern comfort',
+    images: [
+      '/images/sample-products/p6-1.jpg',
+      '/images/sample-products/p6-2.jpg',
+    ],
+  },
+    {
+    name: "Mens Pants",
+    slug: 'mens-pants',
+    description: 'Classic Polo style with modern comfort',
+    images: [
+      '/images/sample-products/p3-1.jpg',
+      '/images/sample-products/p3-2.jpg',
+    ],
+  },
+],
   products: [
     {
       name: 'Polo Sporting Stretch Shirt',
@@ -27,6 +57,7 @@ const sampleData = {
         '/images/sample-products/p1-1.jpg',
         '/images/sample-products/p1-2.jpg',
       ],
+      colors:["red","green" , "yellow"],
       price: 59.99,
       brand: 'Polo',
       rating: 4.5,
@@ -44,6 +75,7 @@ const sampleData = {
         '/images/sample-products/p2-1.jpg',
         '/images/sample-products/p2-2.jpg',
       ],
+      colors:["red","green" , "yellow"],
       price: 85.9,
       brand: 'Brooks Brothers',
       rating: 4.2,
@@ -61,6 +93,7 @@ const sampleData = {
         '/images/sample-products/p3-1.jpg',
         '/images/sample-products/p3-2.jpg',
       ],
+      colors:["red","green" , "yellow"],
       price: 99.95,
       brand: 'Tommy Hilfiger',
       rating: 4.9,
@@ -78,6 +111,7 @@ const sampleData = {
         '/images/sample-products/p4-1.jpg',
         '/images/sample-products/p4-2.jpg',
       ],
+      colors:["red","green" , "yellow"],
       price: 39.95,
       brand: 'Calvin Klein',
       rating: 3.6,

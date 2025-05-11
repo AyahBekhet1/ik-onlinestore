@@ -7,10 +7,10 @@ export default function ProductPrice({value , className}:{value:number ; classNa
     const [intValue , floatValue ] =stringvalue.split('.')
   return (
     <p className={cn('text-2xl' , className)}>
-      <span className="text-xs align-super">$</span>
       <span className="">{intValue}</span>
 
-      <span className="text-xs align-super">{floatValue}</span>
+      <span>{`.${floatValue} `}</span>
+      <span>LE</span>
     </p>
   )
 }

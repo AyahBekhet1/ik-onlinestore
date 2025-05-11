@@ -2,58 +2,45 @@ import { Button } from "@/components/ui/button";
 import { AlignCenter, ShoppingCartIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-  } from "@/components/ui/sheet"
-  
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import UserButton from "./user-button";
+import { auth } from "@/auth";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
-export default function Menu() {
+export default async function Menu() {
+  const session = await auth();
+
   return (
-    <div className='flex justify-end gap-3 pe-10'>
-      <nav className='hidden md:flex w-full max-w-xs gap-1'>
-        <Button asChild variant='ghost'>
-          <Link href='/cart'>
-            <ShoppingCartIcon />
-          </Link>
-        </Button>
-        <Button asChild>
-          <Link href='/sign-in'>
-            <UserIcon size={500} />
-          </Link>
-        </Button>
-      </nav>
-      <nav className='md:hidden'>
-        <Sheet>
-          <SheetTrigger className="align-middle">
-          <AlignCenter color="#D17B88" size={38} />
-          </SheetTrigger>
-          <SheetContent className="flex flex-col items-start ">
-            <SheetHeader>
-              <SheetTitle className="mb-4">Menu</SheetTitle>
-             <div className="space-y-4 flex flex-col items-start">
-             <Button asChild variant='ghost' >
-          <Link href='/cart'>
-            <ShoppingCartIcon />
-            Cart
-          </Link>
-        </Button>
-        <Button asChild>
-          <Link href='/sign-in'>
-            <UserIcon size={500} />
-            Sign In
-          </Link>
-        </Button>
-             </div>
-              <SheetDescription>
-              </SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
-      </nav>
-    </div>
+    <nav>
+      <Sheet>
+        <SheetTrigger>
+          <AlignCenter size={38} className='pe-4' />
+        </SheetTrigger>
+        <VisuallyHidden>
+          <SheetTitle>Menu</SheetTitle>
+        </VisuallyHidden>
+        <SheetContent className=' border-transparent rounded-3xl sheet-bg text-white'>
+          <SheetHeader className='mt-12'>
+            {/* <SheetTitle className="mb-4 flex text-center ps-4 mt-20 uppercase text-white">Menu</SheetTitle> */}
+            <div className='space-y-5 flex flex-col justify-start items-start'>
+              <Button asChild className='bg-transparent'>
+                <Link href='/cart' className='text-white text-xl nav-font'>
+                  <ShoppingCartIcon />
+                  Cart
+                </Link>
+              </Button>
+
+              <UserButton />
+            </div>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    </nav>
   );
 }

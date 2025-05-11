@@ -1,10 +1,19 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card , CardContent } from "@/components/ui/card";
 import { getProductBySlug } from "@/lib/actions/product.action";
 import { notFound } from "next/navigation";
-import ProductPrice from "@/components/shared/product/productPrice";
-import ProductImages from "@/components/shared/product/productImages";
+
+import { getMyCart } from "@/lib/actions/cart.actions";
+import ProductDetails from "./product-details";
+import { CartItem } from "@/types";
+import { convertToPlainObj } from "@/lib/utils";
+
+type CartPreview = {
+  items: CartItem[];
+  itemsPrice: string;
+  totalPrice: string;
+  shippingPrice: string;
+  sessionCartId: string;
+  userId?: string;
+};
 
 
 export default async function ProductDetailsPage(props: {
@@ -14,57 +23,23 @@ export default async function ProductDetailsPage(props: {
 
   const product = await getProductBySlug(slug);
   if (!product) notFound();
-
+  
+  const cart = await getMyCart()
+  const {items,
+    itemsPrice,
+    totalPrice,
+    shippingPrice,
+    sessionCartId,
+    userId}= cart as CartPreview
+    
   return(
   <div className="wrapper">
-    <section>
-        <div className="grid grid-cols-1 md:grid-cols-5">
-            <div className="col-span-2">
-                <ProductImages images={product.images} />
-            </div>
-            <div className="col-span-2 p-5">
-                <div className="flex flex-col gap-6">
-                    <p>
-                        {product.brand} {product.category}
-                    </p>
-                    <h1 className="h3-bold">{product.name}</h1>
-                    <p>{product.rating} of {product.numReviews} Reviews</p>
-                    <div className="flex-col gap-3 sm:flex-row sm:items-center">
-                        <ProductPrice value={Number(product.price)} className="w-24 rounded-full bg-green-100 text-green-700 px-5 py-2" />
-                    </div>
-                </div>
-                <div className="mt-10">
-                    <p className="font-semibold">Description</p>
-                    <p>{product.description}</p>
-                </div>
-            </div>
-            <div className="w-56 sm:w-full mx-auto  ">
-                <Card>
-                    <CardContent className="p-4 md:p-2">
-                        <div className="mb-4 flex justify-between">
-                            <div>
-                                Price
-                            </div>
-                            <div>
-                                <ProductPrice value={Number(product.price)}  />
-                            </div>
-                        </div>
-                        <div className="mb-4 text-center flex justify-between">
-                            <div>Status</div>
-                            {product.stock>0?(<Badge variant='outline' className="text-center">In Stock</Badge>):(<Badge variant='destructive'>Out of Stock</Badge>)}
-                        </div>
-                        {
-                            product.stock >0&&(
-                                <div className="flex-center">
-                                    <Button className="w-full">Add To Cart</Button>
-                                </div>
-                            )
-                        }
-                    </CardContent>
-                </Card>
-            </div>
-        </div>
-    </section>
+    <ProductDetails cart={{items,
+    itemsPrice,
+    totalPrice,
+    shippingPrice,
+    sessionCartId,
+    userId}} product={convertToPlainObj(product)}   />
   </div>
   )
 }
