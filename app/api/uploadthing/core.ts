@@ -15,17 +15,16 @@ export const ourFileRouter = {
   })
     // Set permissions and file types for this FileRoute
     .middleware(async () => {
-     const session = await auth()
-
-      // If you throw, the user will not be able to upload
+      const session = await auth();
       if (!session) throw new UploadThingError("Unauthorized");
-
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: session?.user?.id };
+      return { userId: session.user.id }; // <- This is how metadata is set
     })
+    
     .onUploadComplete(async ({ metadata }) => {
+      console.log("Upload completed by:", metadata.userId);
       return { uploadedBy: metadata.userId };
     }),
 } satisfies FileRouter;
+
 
 export type OurFileRouter = typeof ourFileRouter;

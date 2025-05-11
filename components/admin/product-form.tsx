@@ -26,6 +26,7 @@ import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
 import { Checkbox } from "../ui/checkbox";
 
+
 export default function ProductForm({
   type,
   product,
@@ -36,7 +37,6 @@ export default function ProductForm({
   productId?: string;
 }) {
   const router = useRouter();
-
   const form = useForm<z.infer<typeof insertProductSchema>>({
     resolver: zodResolver(
       type === "Update" ? updateProductSchema : insertProductSchema
@@ -291,6 +291,7 @@ export default function ProductForm({
                           onUploadError={(error: Error) => {
                             toast.error(`ERROR! ${error.message}`);
                           }}
+                          
                         />
                       </FormControl>
                     </div>
