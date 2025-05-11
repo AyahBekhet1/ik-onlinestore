@@ -7,7 +7,8 @@ export const authConfig = {
   callbacks: {
     authorized({ request, auth }: { request: NextRequest; auth: any }) {
       const { pathname } = request.nextUrl;
-
+      console.log("Middleware - auth:", auth);
+      console.log("Middleware - path:", request.nextUrl.pathname);
       const protectedPaths = [
         /^\/profile/,
         /^\/user\/.*/,
@@ -35,12 +36,16 @@ export const authConfig = {
 
       // Set cookie using header (not .cookies API — not allowed in Edge)
       const response = NextResponse.next();
-      response.headers.set(
-        "Set-Cookie",
-        `sessionCartId=${newSessionCartId}; Path=/; Max-Age=${60 * 60 * 24 * 30}; HttpOnly; Secure; SameSite=Lax`
-      );
-
+      response.cookies.set({
+        name: "sessionCartId",
+        value: newSessionCartId,
+        httpOnly: true,
+        path: "/",
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
       return response;
+      
+
     },
   },
 } satisfies NextAuthConfig;
