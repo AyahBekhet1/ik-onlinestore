@@ -21,10 +21,10 @@ export const authConfig = {
       if (!auth && isProtected) return false;
 
       // Ensure sessionCartId exists, or set a new one
-      const sessionCartId = request.cookies.get("sessionCartId");
-
+      const cookieHeader = request.headers.get("cookie") || "";
+      const hasSessionCartId = cookieHeader.includes("sessionCartId=");
       // If cookie exists, allow request
-      if (sessionCartId) return true;
+      if (hasSessionCartId) return true;
 
       // Generate UUID manually for Edge Runtime
       const newSessionCartId = Array.from(crypto.getRandomValues(new Uint8Array(16)))
@@ -33,11 +33,10 @@ export const authConfig = {
 
       // Create a response that sets the cookie
       const response = NextResponse.next();
-      response.cookies.set("sessionCartId", newSessionCartId, {
-        path: "/",
-        maxAge: 60 * 60 * 24 * 30, // 30 days
-        httpOnly: true,
-      });
+      response.headers.append(
+        "Set-Cookie",
+        `sessionCartId=${newSessionCartId}; Path=/; Max-Age=${60 * 60 * 24 * 30}; HttpOnly`
+      );
 
       return response;
     },
