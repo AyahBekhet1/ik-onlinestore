@@ -1,51 +1,45 @@
-import type { NextAuthConfig } from 'next-auth'
-import { NextResponse } from 'next/server'
+import type { NextAuthConfig } from "next-auth";
+import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+export const authConfig = {
+  providers: [],
+  callbacks: {
+    authorized({ request, auth }: { request: NextRequest; auth: any }) {
+      const protectedPaths = [
+        /^\/profile/,
+        /^\/user\/.*/,
+        /^\/order\/.*/,
+        /^\/admin/,
+      ];
 
-export const authConfig ={
-    providers:[],
-    callbacks:{
-        authorized({request, auth}:{ request: NextRequest; auth: any }){
-            //array of regex patterns of paths we want to protect
-            const protectedPaths = [
-                /\/profile/,
-                /\/user\/(.*)/,
-                /\/order\/(.*)/,
-                /\/admin/,
-            ]
+      const { pathname } = request.nextUrl;
 
-            //get pathname from the req url object
-            const {pathname}=request.nextUrl
-        
+      const isProtected = protectedPaths.some((regex) => regex.test(pathname));
 
-            //check if user not authenticated and accessing a protecting path
-            //!auth tell us the user is a guest not logged in
-            if(!auth && protectedPaths.some((p)=>p.test(pathname))) return false
+      // If unauthenticated and path is protected, deny access
+      if (!auth && isProtected) return false;
 
-            // check for session cart cookie
-            if(!request.cookies.get('sessionCartId')){
-                //generate new session cart id cookie
-                const sessionCartId = Array.from(crypto.getRandomValues(new Uint8Array(16)))
-                .map((b) => b.toString(16).padStart(2, '0'))
-                .join('');
-              
-                //clone the req headers
-                const newRequestHeaders = new Headers(request.headers)
+      // Ensure sessionCartId exists, or set a new one
+      const sessionCartId = request.cookies.get("sessionCartId");
 
-                //create new response and add the new headers
-                const response = NextResponse.next({
-                    request:{
-                        headers:newRequestHeaders
-                    }
-                });
-                //set newly generated sessionCartId in the response cookies
-                response.cookies.set('sessionCartId', sessionCartId)
-                // Return the response with the sessionCartId set
-                return response
-            }else{
-                return true
-            }
-          }
-    }
-}satisfies NextAuthConfig
+      // If cookie exists, allow request
+      if (sessionCartId) return true;
+
+      // Generate UUID manually for Edge Runtime
+      const newSessionCartId = Array.from(crypto.getRandomValues(new Uint8Array(16)))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+
+      // Create a response that sets the cookie
+      const response = NextResponse.next();
+      response.cookies.set("sessionCartId", newSessionCartId, {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        httpOnly: true,
+      });
+
+      return response;
+    },
+  },
+} satisfies NextAuthConfig;
