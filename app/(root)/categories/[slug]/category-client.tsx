@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import { ReactLenis } from "lenis/react";
 
 import { Category } from "@/types";
 import Link from "next/link";
@@ -151,7 +150,6 @@ export default function CategoryClient({
   }, [nextCategory.slug, isTransitioning, shouldUpdateProgress]);
 
   return (
-    <ReactLenis root>
       <div className='category-page pt-10 overflow-hidden'>
         <div className='category-nav z-50 sm:w-[70%]' ref={categoryNavRef}>
           <div className='link rounded-full'>
@@ -236,6 +234,5 @@ export default function CategoryClient({
           </div>
         </div>
       </div>
-    </ReactLenis>
   );
 }
