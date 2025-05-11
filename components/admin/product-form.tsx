@@ -283,7 +283,7 @@ export default function ProductForm({
                         />
                       ))}
                       <FormControl>
-                        <UploadButton
+                     {/*   <UploadButton
                           endpoint='imageUploader'
                           onClientUploadComplete={(res: { url: string }[]) => {
                             form.setValue("images", [...images, res[0].url]);
@@ -293,6 +293,7 @@ export default function ProductForm({
                           }}
                           
                         />
+                        */}
                       </FormControl>
                     </div>
                   </CardContent>
@@ -328,8 +329,9 @@ export default function ProductForm({
                         )
                     }
 
+{/*  
                     {isFeatured &&  !banner && (
-                        <UploadButton endpoint='imageUploader' 
+                       <UploadButton endpoint='imageUploader' 
                         onClientUploadComplete={(res :{url:string}[])=>{
                             form.setValue('banner' , res[0].url)
                         }}
@@ -337,7 +339,8 @@ export default function ProductForm({
                             toast.error(`ERROR! ${error.message}`)
                         }}
                         />
-                    )}
+                      )}
+                      */} 
                 </CardContent>
             </Card>
             </div>

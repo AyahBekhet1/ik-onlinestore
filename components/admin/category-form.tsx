@@ -167,7 +167,7 @@ export default function CategoryForm({
                         />
                       ))}
                       <FormControl>
-                        <UploadButton
+                      {/*<UploadButton
                           endpoint='imageUploader'
                           onClientUploadComplete={(res: { url: string }[]) => {
                             form.setValue("images", [...images, res[0].url]);
@@ -175,7 +175,7 @@ export default function CategoryForm({
                           onUploadError={(error: Error) => {
                             toast.error(`ERROR! ${error.message}`);
                           }}
-                        />
+                        /> */}
                       </FormControl>
                     </div>
                   </CardContent>
