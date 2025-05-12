@@ -59,8 +59,8 @@ export const categoryDefaultValues = {
   description:'',
 }
 
-export const USER_ROLES = process.env.USERS_ROLES?process.env.USERS_ROLES.split(', '):["admin","user"]
-export const USER_CITY = process.env.USERS_CITY?process.env.USERS_CITY.split(', '):["alexandria","cairo"]
+export const USER_ROLES = process.env.USERS_ROLES?process.env.USERS_ROLES.split(','):["admin","user"]
+export const USER_CITY = process.env.USERS_CITY?process.env.USERS_CITY.split(','):["alexandria","cairo"]
 
 export const CouponDefaultValues ={
   code:"",
@@ -71,4 +71,4 @@ export const CouponDefaultValues ={
   expiresAt:new Date()
 }
 
-export const DISCOUNT_TYPE = process.env.DISCOUNT_TYPE? process.env.DISCOUNT_TYPE.split(', '):["percentage" , 'fixed']
+export const DISCOUNT_TYPE = process.env.DISCOUNT_TYPE? process.env.DISCOUNT_TYPE.split(','):["percentage" , 'fixed']

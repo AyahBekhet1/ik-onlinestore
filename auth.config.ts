@@ -2,7 +2,9 @@
 import type { NextAuthConfig } from 'next-auth';
 import { NextResponse } from 'next/server';
 
+
 export const authConfig = {
+    
   providers: [], // Required by NextAuthConfig type
   callbacks: {
     authorized({ request, auth }: any) {
@@ -25,7 +27,12 @@ export const authConfig = {
       // Check for session cart cookie
       if (!request.cookies.get('sessionCartId')) {
         // Generate new session cart id cookie
-        const sessionCartId = crypto.randomUUID();
+        let sessionCartId = '';
+if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+  sessionCartId = crypto.randomUUID();
+} else {
+  sessionCartId = Math.random().toString(36).substring(2, 15);
+}
 
         // Create new response and add the new headers
         const response = NextResponse.next({
