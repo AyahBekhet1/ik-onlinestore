@@ -1,51 +1,46 @@
-import type { NextAuthConfig } from "next-auth";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { NextAuthConfig } from 'next-auth';
+import { NextResponse } from 'next/server';
 
 export const authConfig = {
-  providers: [],
+  providers: [], // Required by NextAuthConfig type
   callbacks: {
-    authorized({ request, auth }: { request: NextRequest; auth: any }) {
-      const { pathname } = request.nextUrl;
-      console.log("Middleware - auth:", auth);
-      console.log("Middleware - path:", request.nextUrl.pathname);
+    authorized({ request, auth }: any) {
+      // Array of regex patterns of paths we want to protect
       const protectedPaths = [
-        /^\/profile/,
-        /^\/user\/.*/,
-        /^\/order\/.*/,
-        /^\/admin/,
+        /\/shipping-address/,
+        /\/payment-method/,
+        /\/place-order/,
+        /\/profile/,
+        /\/user\/(.*)/,
+        /\/order\/(.*)/,
+        /\/admin/,
       ];
 
-      const isProtected = protectedPaths.some((regex) => regex.test(pathname));
+      // Get pathname from the req URL object
+      const { pathname } = request.nextUrl;
+      // Check if user is not authenticated and accessing a protected path
+      if (!auth && protectedPaths.some((p) => p.test(pathname))) return false;
 
-      // Block unauthenticated access to protected routes
-      if (!auth && isProtected) return false;
+      // Check for session cart cookie
+      if (!request.cookies.get('sessionCartId')) {
+        // Generate new session cart id cookie
+        const sessionCartId = crypto.randomUUID();
 
-      // Use cookie header string — compatible with Edge
-      const cookieHeader = request.headers.get("cookie") || "";
-      const hasSessionCartId = /sessionCartId=/.test(cookieHeader);
+        // Create new response and add the new headers
+        const response = NextResponse.next({
+          request: {
+            headers: new Headers(request.headers),
+          },
+        });
 
-      if (hasSessionCartId) {
-        return true; // Let the request through
+        // Set newly generated sessionCartId in the response cookies
+        response.cookies.set('sessionCartId', sessionCartId);
+
+        return response;
       }
 
-      // Generate a random ID (UUID-like) manually
-      const newSessionCartId = Array.from(crypto.getRandomValues(new Uint8Array(16)))
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-
-      // Set cookie using header (not .cookies API — not allowed in Edge)
-      const response = NextResponse.next();
-      response.cookies.set({
-        name: "sessionCartId",
-        value: newSessionCartId,
-        httpOnly: true,
-        path: "/",
-        maxAge: 60 * 60 * 24 * 30, // 30 days
-      });
-      return response;
-      
-
+      return true;
     },
   },
 } satisfies NextAuthConfig;
